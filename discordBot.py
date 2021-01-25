@@ -1,20 +1,36 @@
 import discord
 import os
+import random
 
 TOKEN = os.getenv('TOKEN')
-client = discord.Client()
+USER = os.getenv('USER')
 
-@client.event
-async def on_ready():
-    print("Logged in!")
+class DiscordBot:
+    get_tweets_for_user = None
 
-@client.event
-async def on_message(message):
-    #Don't respond to ourself
-    if message.author == client.user:
-        return
+    def __init__(self, controller):
+        self.controller = controller
 
-    if '!tweet' in message.content:
-        await message.channel.send('Tweets will be coming soon')
+    def run_bot(self):
+        client = discord.Client()
 
-client.run(TOKEN)
+        @client.event
+        async def on_ready():
+            print('We have logged in as {0.user}'.format(client))
+
+        @client.event
+        async def on_message(message):
+            #Don't respond to ourself
+            if message.author == client.user:
+                return
+
+            if message.content.startswith('!tweet'):
+                tweet = self.get_random_tweet(USER)
+                await message.channel.send(tweet.text)
+
+        client.run(TOKEN)
+
+    def get_random_tweet(self, USER, num_tweets=20):
+        tweets = self.controller.get_tweets_for_user(USER, num_tweets)
+        index = random.randint(0, num_tweets - 1)
+        return tweets[index]
