@@ -1,6 +1,7 @@
 import discord
 import os
 import random
+import datetime
 
 TOKEN = os.getenv('TOKEN')
 USER = os.getenv('USER')
@@ -25,8 +26,20 @@ class DiscordBot:
                 return
 
             if message.content.startswith('!tweet'):
-                tweet = self.get_random_tweet(USER)
-                await message.channel.send(tweet.text)
+                tweet = self.get_random_tweet(USER, 100)
+                
+                embed = discord.Embed(
+                    description=tweet.text
+                )
+                embed.set_author(
+                    name=f'{tweet.user.name} (@{tweet.user.screen_name})',
+                    icon_url=tweet.user.profile_image_url
+                )
+                embed.set_footer(
+                    text=f"Twitter • {tweet.created_at.strftime('%d, %b %Y')}",
+                    icon_url="https://abs.twimg.com/icons/apple-touch-icon-192x192.png"
+                )
+                await message.channel.send(f'https://twitter.com/twitter/statuses/{tweet.id}', embed=embed)
 
         client.run(TOKEN)
 
@@ -34,3 +47,5 @@ class DiscordBot:
         tweets = self.controller.get_tweets_for_user(USER, num_tweets)
         index = random.randint(0, num_tweets - 1)
         return tweets[index]
+
+
