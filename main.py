@@ -5,6 +5,9 @@ class ParentController:
     def get_tweets_for_user(self, user_id, num_tweets):
         return self.twitter_instance.get_tweets_for_user(user_id, num_tweets)
 
+    def send_tweet_to_channel(self, tweet):
+        self.discord_instance.send_tweet_to_channel(tweet)
+
     # Twitter instance
     @property
     def twitter_instance(self) -> TwitterAPI:
@@ -25,11 +28,12 @@ class ParentController:
 
 if __name__ == "__main__":
     controller = ParentController()
-    twitter_api = TwitterAPI(controller)
-    discord_bot = DiscordBot(controller)
 
+    discord_bot = DiscordBot(controller)
+    controller.discord_instance = discord_bot
+
+    twitter_api = TwitterAPI(controller)
     controller.twitter_instance = twitter_api
-    controller.discord_instance = discord_bot    
 
     # Run the bot last
     discord_bot.run_bot()
