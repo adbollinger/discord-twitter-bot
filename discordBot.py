@@ -59,7 +59,11 @@ class DiscordBot:
         )
         return embed
 
-    def send_tweet_to_channel(self, tweet):
+    def send_tweet_to_channel(self, tweet, only_user = True):
+        # Exclude retweets and mentions
+        if (only_user and tweet.user.id != int(USER)):
+            return
+
         embed = self.get_embed(tweet)
         
         channel = self.client.get_channel(int(CHANNEL))
