@@ -42,7 +42,10 @@ class TwitterAPI():
         myStreamListener = MyStreamListener()
         myStreamListener.controller_instance = controller
         myStream = tweepy.Stream(auth = self.api.auth, listener=myStreamListener)
-        myStream.filter(follow=USER, is_async=True)
+        
+        users_to_follow = []
+        users_to_follow.append(str(USER))
+        myStream.filter(follow=users_to_follow, is_async=True)
 
     def get_tweets_for_user(self, userid, num_tweets):
         return self.api.user_timeline(user_id=userid, count=num_tweets)

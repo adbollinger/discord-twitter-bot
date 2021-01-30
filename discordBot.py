@@ -27,8 +27,7 @@ class DiscordBot:
                 return
 
             if message.content.startswith('!tweet'):
-                tweet = self.get_random_tweet(USER)
-                
+                tweet = self.get_random_tweet(USER)                
                 embed = self.get_embed(tweet)
 
                 await message.channel.send(f'https://twitter.com/twitter/statuses/{tweet.id}', embed=embed)
@@ -51,6 +50,7 @@ class DiscordBot:
         )
         embed.set_author(
             name=f'{tweet.user.name} (@{tweet.user.screen_name})',
+            url=f'https://twitter.com/{tweet.user.screen_name}',
             icon_url=tweet.user.profile_image_url
         )
         embed.set_footer(
@@ -60,11 +60,10 @@ class DiscordBot:
         return embed
 
     def send_tweet_to_channel(self, tweet):
-        self.client.wait_until_ready()
         embed = self.get_embed(tweet)
         
         channel = self.client.get_channel(int(CHANNEL))
-        self.client.loop.create_task(channel.send(f'New tweet from {tweet.user.name}', embed=embed))
+        self.client.loop.create_task(channel.send(f'@everyone - New tweet from {tweet.user.name}', embed=embed))
 
 
 
