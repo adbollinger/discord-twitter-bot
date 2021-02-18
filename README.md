@@ -4,6 +4,8 @@
 
 ## Project Screen Shot(s)
 
+### Posting new tweets
+![alt text](./screenshots/twitter-bot.png)
 
 ## Installation and Setup Instructions
 
