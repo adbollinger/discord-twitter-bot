@@ -1,11 +1,13 @@
 ## Twitter Discord Bot
 
-This project allows users to add twitter functionality to a discord bot.
+This project allows users to add twitter functionality to a discord bot using the twitter APIs.
 
 Server users can request a random tweet from a twitter account with !tweet. 
 The bot will also automatically post new tweets made by the account to a specific discord channel and notify users of the new tweet.
 
-## Project Screen Shot(s)
+Tweets are displayed as embedded messages; they are styled after the default twitter embedded message created when pasting a tweet's url.
+
+## Project Screen Shots
 
 ### Posting new tweets
 ![Posting a new tweet to a channel](./screenshots/twitter-bot.png)
@@ -15,7 +17,9 @@ The bot will also automatically post new tweets made by the account to a specifi
 
 ## Installation and Setup Instructions
 
-Clone this repository. To run it, you will need `Python` and `pip` installed globally on your machine.  
+To run this project, you will need `Python` and `pip` installed globally on your machine.
+
+Start by cloning this repository and following the installation instructions below.
 
 ### Installation:
 
@@ -35,7 +39,7 @@ To run the app:
 
 `py main.py`  
 
-### Environment Variables
+### Environment Variables:
 
 TOKEN - Discord bot token
 
